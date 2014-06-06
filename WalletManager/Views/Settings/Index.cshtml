@@ -1,13 +1,84 @@
-﻿
+﻿@model IEnumerable<WalletManager.Models.MovementTypesModel>
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Settings page</h2>
+<p>
+    <a data-toggle="modal" data-target="#myModalCreate" style="cursor:pointer;" class="btn btn-success">
+        <i class="glyphicon glyphicon-plus"></i>
+        Add
+    </a>
+</p>
+<table class="table table-hover">
+    <thead>
+        <tr>
 
+            <th>
+                @Html.DisplayNameFor(model => model.directory)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sectionId)
+            </th>
+
+            <th></th>
+
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                <td>
+                    <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                        @Html.DisplayFor(modelItem => item.directory)
+                    </a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.sectionId)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        </tbody>
+    }
+
+</table>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
+<div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    ----
+</div>
 <script type="text/javascript">
-        $(function () {
+    $(function () {
+            $('body').on("click", "a[data-target=#myModal]", function () {
+                var url = $('#myModal').data('url');
+
+                $.get("../Settings/Edit/" + $(this).attr('id'), function (data) {
+                    $('#myModal').html(data);
+
+                    $('#myModal').modal('show');
+                });
+            });
+            $('body').on("click", "a[data-target=#myModalCreate]", function () {
+                var url = $('#myModalCreate').data('url');
+
+                $.get("../Settings/Create", function (data) {
+                    $('#myModalCreate').html(data);
+
+                    $('#myModalCreate').modal('show');
+                });
+            });
             $("#myCarousel").hide();
             $("#nav").attr("style", "margin-bottom: 0px !important; position: relative !important;")
         });

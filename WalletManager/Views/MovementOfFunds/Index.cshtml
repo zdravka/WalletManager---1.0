@@ -14,74 +14,77 @@
     <div class="panel-heading">Movement of funds</div>
     <div class="panel-body">
         <table class="table table-hover">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EstimateDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EstimatePrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RealDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.RealPrice)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.sectionId)
-                </th>
-            </tr>
-
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EstimateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EstimatePrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RealDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RealPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.sectionId)
+                    </th>
+                </tr>
+            </thead>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        <a id="@item.Id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
-                            @Html.DisplayFor(modelItem => item.name)
-                        </a>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EstimateDate)
-                    </td>
-                    <td>
-                        @if (item.sectionId == 1)
-                        {
-                            <span class="redExpense">
-                                @Html.DisplayFor(modelItem => item.EstimatePrice)
-                            </span>
-                        }
-                        else if (item.sectionId == 2)
-                        {
-                            <span class="greenIncome">
-                                @Html.DisplayFor(modelItem => item.EstimatePrice)
-                            </span>
-                        }
+                <tbody>
+                    <tr>
+                        <td>
+                            <a id="@item.Id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                                @Html.DisplayFor(modelItem => item.name)
+                            </a>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EstimateDate)
+                        </td>
+                        <td>
+                            @if (item.sectionId == 1)
+                            {
+                                <span class="redExpense">
+                                    @Html.DisplayFor(modelItem => item.EstimatePrice)
+                                </span>
+                            }
+                            else if (item.sectionId == 2)
+                            {
+                                <span class="greenIncome">
+                                    @Html.DisplayFor(modelItem => item.EstimatePrice)
+                                </span>
+                            }
 
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RealDate)
-                    </td>
-                    <td>
-                        @if (item.sectionId == 1)
-                        {
-                            <span class="redExpense">
-                                @Html.DisplayFor(modelItem => item.RealPrice)
-                            </span>
-                        }
-                        else if (item.sectionId == 2)
-                        {
-                            <span class="greenIncome">
-                                @Html.DisplayFor(modelItem => item.RealPrice)
-                            </span>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.fundType.name)
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RealDate)
+                        </td>
+                        <td>
+                            @if (item.sectionId == 1)
+                            {
+                                <span class="redExpense">
+                                    @Html.DisplayFor(modelItem => item.RealPrice)
+                                </span>
+                            }
+                            else if (item.sectionId == 2)
+                            {
+                                <span class="greenIncome">
+                                    @Html.DisplayFor(modelItem => item.RealPrice)
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fundType.name)
+                        </td>
+                    </tr>
+                </tbody>
             }
         </table>
     </div>

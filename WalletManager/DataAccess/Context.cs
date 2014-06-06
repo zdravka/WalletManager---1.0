@@ -28,5 +28,7 @@ namespace WalletManager.DataAccess
         public DbSet<MovementOfFundsModel> MovementOfFunds { get; set; }
 
         public DbSet<FundsTypeModel> FundsType { get; set; }
+
+        public DbSet<MovementTypesModel> MOvementType { get; set; }
     }
 }

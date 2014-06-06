@@ -8,6 +8,9 @@ body {
 img {
     background-color: #ccc;
 }
+.datepicker {
+    z-index:1111 !important;
+}
 .finance:before  {
     content: "\f0d6";
     font-family: FontAwesome;
