@@ -1,0 +1,38 @@
+﻿@model List<WalletManager.Models.FundsTypeModel>
+
+<div>
+</div>
+<table>
+    <tr>
+        <td>
+            <div id="radioList">
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    @Html.LabelFor(a => a[i].name, Model[i].name)
+                    @Html.RadioButtonFor(a => a[i].name,
+                                Model[i].id,
+                                new
+                                {
+                                    id = "radio" + Model[i].id,
+                                    onclick = "uncheckAll(this);"
+                                })
+                }
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="button" value="Save All" id="btnsave" />
+        </td>
+    </tr>
+</table>
+<script>
+    function uncheckAll(element) {
+        var div = document.getElementById("radioList");
+        var radios = div.getElementsByTagName("input");
+        for (var i = 0; i <= radios.length - 1; i++) {
+            radios[i].checked = "";
+        }
+        element.checked = "checked";
+    }
+</script>

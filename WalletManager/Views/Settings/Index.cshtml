@@ -42,13 +42,29 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.sectionId)
+                    @if (item.sectionId == 1)
+                    {
+                        <span class="redExpense">
+                            @Html.DisplayFor(modelItem => item.movementType.name)
+                        </span>
+                    }
+                    else if (item.sectionId == 2)
+                    {
+                        <span class="greenIncome">
+                            @Html.DisplayFor(modelItem => item.movementType.name)
+                        </span>
+                    }
+                   
                 </td>
 
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                    
+                    <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                        <i class="fa fa-pencil-square-o fa-2x"></i>
+                    </a>
+                    <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                        <i class="fa fa-recycle fa-2x"></i>
+                    </a>
                 </td>
             </tr>
         </tbody>

@@ -25,6 +25,12 @@ img {
     top: 10px;
     left: 0;
 }
+.redExpense {
+    color: red;
+}
+.greenIncome {
+    color: green;
+}
 /* CUSTOMIZE THE NAVBAR
 -------------------------------------------------- */
 

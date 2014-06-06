@@ -69,6 +69,7 @@ namespace WalletManager.Controllers
         {
             MovementOfFundsModel fundModel = new MovementOfFundsModel();
             PopulateDropDown();
+           
             return PartialView(fundModel);
         }
 
@@ -83,9 +84,14 @@ namespace WalletManager.Controllers
             { 
                 fundModel.userId = User.Identity.GetUserId();
             }
+
             //var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
            // fundModel.userId = User.Identity.GetUserId();
-            PopulateDropDown(fundModel.sectionId);
+            //MovementTypesModel movementType = new MovementTypesModel();
+           // movementType = _mtRepository.GetMovementOfFundsByID((int)fundModel.movementTypeId);
+           // fundModel.sectionId = fundModel.movementType.sectionId;
+
+            PopulateDropDown(fundModel.sectionId, fundModel.movementTypeId);
             _mfRepository.InsertMovementOfFunds(fundModel);
             _mfRepository.Save();
 
@@ -97,14 +103,14 @@ namespace WalletManager.Controllers
         {
             MovementOfFundsModel movementModel = new MovementOfFundsModel();
             movementModel = _mfRepository.GetMovementOfFundsByID(id);
-            PopulateDropDown(movementModel.sectionId);
+            PopulateDropDown(movementModel.movementType.sectionId, movementModel.movementTypeId);
             return PartialView(movementModel);
         }
 
         [HttpPost]
         public ActionResult Edit(MovementOfFundsModel movementModel)
         {
-            PopulateDropDown(movementModel.sectionId);
+            PopulateDropDown(movementModel.movementType.sectionId, movementModel.movementTypeId);
             if (User.Identity.Name != null)
             {
                 movementModel.userId = User.Identity.GetUserId();
@@ -120,7 +126,7 @@ namespace WalletManager.Controllers
         public ActionResult PieChart()
         {
             var EstimatePrices = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 && d.userId == User.Identity.GetUserId() select d.EstimatePrice);
-            var EstimateNames = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 && d.userId == User.Identity.GetUserId() select d.name);
+            var EstimateNames = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 && d.userId == User.Identity.GetUserId() select d.movementType.directory);
             //var RealPrices = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 select d.RealPrice);
 
 
@@ -142,7 +148,7 @@ namespace WalletManager.Controllers
         public ActionResult PieChartExpense()
         {
             var RealPrices = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 && d.userId == User.Identity.GetUserId() select d.RealPrice);
-            var Names = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 && d.userId == User.Identity.GetUserId() select d.name);
+            var Names = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 1 && d.userId == User.Identity.GetUserId() select d.movementType.directory);
 
 
             var pie = new Chart(width: 520, height: 400, theme: ChartTheme.Vanilla)
@@ -161,7 +167,7 @@ namespace WalletManager.Controllers
 
         public ActionResult PieChartIncome()
         {
-            var RealNames = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 2 && d.userId == User.Identity.GetUserId() select d.name);
+            var RealNames = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 2 && d.userId == User.Identity.GetUserId() select d.movementType.directory);
             var EstimatePrices = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 2 && d.userId == User.Identity.GetUserId() select d.EstimatePrice);
 
             var pies = new Chart(width: 520, height: 400, theme: ChartTheme.Vanilla)
@@ -180,7 +186,7 @@ namespace WalletManager.Controllers
 
         public ActionResult PieChartIncomeReal()
         {
-            var RealNames = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 2 && d.userId == User.Identity.GetUserId() select d.name);
+            var RealNames = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 2 && d.userId == User.Identity.GetUserId() select d.movementType.directory);
             var RealPrices = (from d in _mfRepository.GetMovementOfFunds() where d.sectionId == 2 && d.userId == User.Identity.GetUserId() select d.RealPrice);
             
             var pie = new Chart(width: 520, height: 400, theme: ChartTheme.Vanilla)
@@ -197,9 +203,10 @@ namespace WalletManager.Controllers
             return null;
         }
 
-        public void PopulateDropDown(object typeSelected = null)
+        public void PopulateDropDown(object typeSelected = null, object movementSelected = null)
         {
             ViewBag.sectionId = new SelectList(_ftRepository.GetFundsTypes(), "Id", "name");
+            ViewBag.movementTypeId = new SelectList(_mtRepository.GetMovementTypes(), "id", "directory");
         }
     }
 }

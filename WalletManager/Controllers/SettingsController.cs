@@ -43,10 +43,10 @@ namespace WalletManager.Controllers
         }
 
         // GET: Settings
+        [Authorize]
         public ActionResult Index()
         {
             var movement = from mf in _mtRepository.GetMovementTypes()
-                           where mf.userId == User.Identity.GetUserId()
                            select mf;
 
             return View("Index", movement);
@@ -55,7 +55,7 @@ namespace WalletManager.Controllers
         public ActionResult Create()
         {
             MovementTypesModel typeModel = new MovementTypesModel();
-           
+            PopulateDropDown();
             return PartialView(typeModel);
         }
 
@@ -71,7 +71,7 @@ namespace WalletManager.Controllers
             }
             //var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
             // fundModel.userId = User.Identity.GetUserId();
-           
+            PopulateDropDown(typeModel.sectionId);
             _mtRepository.InsertMovementTypes(typeModel);
             _mtRepository.Save();
 
@@ -83,12 +83,14 @@ namespace WalletManager.Controllers
         {
             MovementTypesModel movementModel = new MovementTypesModel();
             movementModel = _mtRepository.GetMovementOfFundsByID(id);
+            PopulateDropDown(movementModel.sectionId);
             return PartialView(movementModel);
         }
 
         [HttpPost]
         public ActionResult Edit(MovementTypesModel movementModel)
         {
+            PopulateDropDown(movementModel.sectionId);
             if (User.Identity.Name != null)
             {
                 movementModel.userId = User.Identity.GetUserId();
@@ -97,6 +99,19 @@ namespace WalletManager.Controllers
             _mtRepository.Save();
 
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Sections()
+        {
+            var allsections = from ft in _ftRepository.GetFundsTypes()
+                              select ft;
+
+            return PartialView(allsections);
+        }
+
+        public void PopulateDropDown(object typeSelected = null)
+        {
+            ViewBag.sectionId = new SelectList(_ftRepository.GetFundsTypes(), "Id", "name");
         }
     }
 }
