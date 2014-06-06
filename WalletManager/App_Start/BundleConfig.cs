@@ -20,15 +20,16 @@ namespace WalletManager
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Scripts/ErniTheme/bootstrap.min.js",
+                      "~/Scripts/ErniTheme/scripts.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/bootstrap-datepicker.js",
                       "~/Scripts/DatePickerReady.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/bootstrap-datepicker.css",
-                      "~/Content/site.css"));
+                      "~/Content/ErniTheme/bootstrap.min.css",
+                       "~/Content/ErniTheme/style.css",
+                      "~/Content/bootstrap-datepicker.css"));
 
             // Set EnableOptimizations to false for debugging. For more information,
             // visit http://go.microsoft.com/fwlink/?LinkId=301862

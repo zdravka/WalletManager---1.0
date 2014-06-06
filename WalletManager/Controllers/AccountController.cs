@@ -13,6 +13,10 @@ using Owin;
 using WalletManager.Models;
 using System.Web.Security;
 using WalletManager.DataAccess;
+using WalletManager.DataAccess.Interface;
+using WalletManager.DataAccess.Source;
+using System.Web.Routing;
+using System.Globalization;
 
 namespace WalletManager.Controllers
 {
@@ -20,7 +24,14 @@ namespace WalletManager.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        public IMembershipService MembershipService { get; set; }
 
+        protected override void Initialize(RequestContext requestContext)
+        {
+            if (MembershipService == null) { MembershipService = new AccountMembershipService(); }
+
+            base.Initialize(requestContext);
+        }
         public AccountController()
         {
         }
@@ -87,8 +98,53 @@ namespace WalletManager.Controllers
 
             // If we got this far, something failed, redisplay form
             return RedirectToAction("../Home/Index");
-        }
+            //if (ModelState.IsValid)
+            //{
+            //    //if (DAL.UserIsValid(model.Username, model.Password))
+            //    //{
+            //    //    FormsAuthentication.SetAuthCookie(model.Username, false);
+            //    //    return RedirectToAction("index", "home");
+            //    //}
+            //    //else
+            //    //{
+            //    //    ModelState.AddModelError("", "Invalid Username or Password");
+            //    //}
+            //    if (MembershipService.ValidateUser(model.UserName, model.Password))
+            //    {
+            //        SetupFormsAuthTicket(model.UserName, false);
+            //        FormsAuthentication.SetAuthCookie(model.UserName, false);
+            //        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+            //            && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+            //        {
+            //            return Redirect(returnUrl);
+            //        }
+            //        return RedirectToAction("Index", "Home");
+            //    }
+            //    ModelState.AddModelError("", "The user name or password provided is incorrect.");
 
+            //}
+            //return View(model);
+        }
+        private User SetupFormsAuthTicket(string userName, bool persistanceFlag)
+        {
+            User user;
+            using (UsersContext usersContext = new UsersContext())
+            {
+                user = usersContext.GetUser(userName);
+            }
+            var userId = user.id;
+            var userData = userId.ToString(CultureInfo.InvariantCulture);
+            var authTicket = new FormsAuthenticationTicket(1, //version
+                                userName, // user name
+                                DateTime.Now,             //creation
+                                DateTime.Now.AddMinutes(30), //Expiration
+                                persistanceFlag, //Persistent
+                                userData);
+
+            var encTicket = FormsAuthentication.Encrypt(authTicket);
+            Response.Cookies.Add(new HttpCookie(FormsAuthentication.FormsCookieName, encTicket));
+            return user;
+        }
         //
         // GET: /Account/Register
         [AllowAnonymous]
@@ -472,15 +528,15 @@ namespace WalletManager.Controllers
             return (ActionResult)PartialView("_RemoveAccountPartial", linkedAccounts);
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && UserManager != null)
-            {
-                UserManager.Dispose();
-                UserManager = null;
-            }
-            base.Dispose(disposing);
-        }
+        //protected override void Dispose(bool disposing)
+        //{
+        //    if (disposing && UserManager != null)
+        //    {
+        //        UserManager.Dispose();
+        //        UserManager = null;
+        //    }
+        //    base.Dispose(disposing);
+        //}
 
         #region Helpers
         // Used for XSRF protection when adding external logins

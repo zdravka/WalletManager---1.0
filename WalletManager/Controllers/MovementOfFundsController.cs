@@ -56,6 +56,7 @@ namespace WalletManager.Controllers
             { 
                 fundModel.userId = Membership.GetUser().ProviderUserKey.ToString();
             }
+           // fundModel.userId = User.Identity.GetUserId();
             PopulateDropDown(fundModel.sectionId);
             _mfRepository.InsertMovementOfFunds(fundModel);
             _mfRepository.Save();

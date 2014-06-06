@@ -166,11 +166,17 @@
     <Compile Include="Controllers\MovementOfFundsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="DataAccess\Context.cs" />
+    <Compile Include="DataAccess\CustomMembershipProvider.cs" />
+    <Compile Include="DataAccess\CustomRoleProvider.cs" />
     <Compile Include="DataAccess\DAL.cs" />
     <Compile Include="DataAccess\Interface\IFundsTypeRepository.cs" />
+    <Compile Include="DataAccess\Interface\IMembershipService.cs" />
     <Compile Include="DataAccess\Interface\IMovementOfFundsRepository.cs" />
+    <Compile Include="DataAccess\Source\AccountMembershipService.cs" />
     <Compile Include="DataAccess\Source\FundsTypeRepository.cs" />
     <Compile Include="DataAccess\Source\MovementOfFundsRepository.cs" />
+    <Compile Include="DataAccess\UserIdentity.cs" />
+    <Compile Include="DataAccess\UsersContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -184,14 +190,24 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\MovementOfFundsModel.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="assets\Finance.png" />
+    <Content Include="assets\me.jpg" />
+    <Content Include="assets\140x140.gif" />
+    <Content Include="assets\1500X500.gif" />
+    <Content Include="assets\512.gif" />
+    <Content Include="assets\money_calculator.png" />
+    <Content Include="assets\safe_sh.png" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\ErniTheme\bootstrap.min.css" />
+    <Content Include="Content\ErniTheme\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -201,6 +217,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
+    <Content Include="Scripts\ErniTheme\bootstrap.min.js" />
+    <Content Include="Scripts\ErniTheme\scripts.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
