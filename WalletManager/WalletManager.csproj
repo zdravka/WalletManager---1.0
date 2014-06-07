@@ -188,6 +188,7 @@
     <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\MovementOfFundsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="DataAccess\Context.cs" />
     <Compile Include="DataAccess\CustomMembershipProvider.cs" />
     <Compile Include="DataAccess\CustomRoleProvider.cs" />
@@ -222,12 +223,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="assets\Finance.png" />
+    <Content Include="assets\jar-money_2357940b1-140x140.jpg" />
     <Content Include="assets\me.jpg" />
     <Content Include="assets\140x140.gif" />
     <Content Include="assets\1500X500.gif" />
     <Content Include="assets\512.gif" />
+    <Content Include="assets\money-airplane-140x140.jpg" />
     <Content Include="assets\money_calculator.png" />
     <Content Include="assets\safe_sh.png" />
+    <Content Include="assets\stethoscope-money-6436961-140x140.jpg" />
+    <Content Include="assets\Warning.png" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap.css" />
@@ -248,6 +253,7 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\ErniTheme\bootstrap.min.js" />
@@ -360,6 +366,9 @@
     <Content Include="Views\Settings\Delete.cshtml" />
     <Content Include="Views\MovementOfFunds\Report.cshtml" />
     <Content Include="Views\MovementOfFunds\PDF.cshtml" />
+    <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Wallet.dgml" />
+    <Content Include="Views\Project\PrivacyPolicy.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
