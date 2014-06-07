@@ -17,6 +17,11 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Owin;
+using RazorPDF;
+using System.IO;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using MvcRazorToPdf;
 namespace WalletManager.Controllers
 {
     [Authorize]
@@ -97,20 +102,135 @@ namespace WalletManager.Controllers
 
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult Report()
+        {
+            var movement = from mf in _mfRepository.GetMovementOfFunds()
+                           where mf.userId == User.Identity.GetUserId()
+                           select mf;
 
+
+            MovementOfFundsModel model = new MovementOfFundsModel();
+            model = _mfRepository.GetMovementOfFundsByID(1);
+            var move = new MovementOfFundsModel 
+            {
+                EstimateDate = model.EstimateDate,
+                EstimatePrice = model.EstimatePrice,
+                RealDate = model.RealDate,
+                RealPrice = model.RealPrice,
+                sectionId = model.sectionId,
+                movementTypeId = model.movementTypeId
+            };
+            //var pdfresult = new PdfResult(movement,"Report");
+
+            //var model = new MovementOfFundsModel
+            //{
+            //    EstimateDate = 1,
+            //    Items = new List<BasketItem>(){
+            //        new BasketItem {
+            //         Id = 1,
+            //         Description = "Item 1",
+            //         Price = 1.99m},
+            //        new BasketItem {
+            //            Id = 2,
+            //            Description = "Item 2",
+            //            Price = 2.99m }
+            //    }
+            //};
+
+            return new PdfActionResult(move);
+        }
+
+        public ActionResult PDF(int id)
+        {
+            //var user = new User();
+            //user.Username = "private";
+            //user.Password = "most private";
+            //var pie = new Report
+            var movement = from mf in _mfRepository.GetMovementOfFunds()
+                           where mf.userId == User.Identity.GetUserId()
+                           select mf;
+            //var pdfResult = new PdfResult(null);
+            //foreach (var item in movement)
+            //{
+            //    pdfResult = new PdfResult(item, "PDF");
+            //}
+            
+            //pdfResult.ViewBag.Title = "Title from pdf";
+            //return pdfResult;
+
+            // Setup sample model
+            var list = movement;
+            //for (int i = 1; i < 10; i++)
+                //list.Add(new Person() { UserName = "Person " + i, LuckyNumber = i });
+
+            // Output to Pdf?
+            //if (Request.QueryString["format"] == "pdf")
+            //    return new PdfResult(list, "PDF");
+
+            //return View(list);
+           // MemoryStream m = new MemoryStream();
+           // Document document = new Document();
+           // PdfWriter.GetInstance(document, m);
+           // document.Open();
+           // document.Add(new Paragraph("Hello WORLD"));
+           // document.Add(new Paragraph(DateTime.Now.ToString()));
+           //// document.Close();
+           // byte[] byteInfo = m.ToArray();
+           // MemoryStream output = new MemoryStream();
+           // output.Write(byteInfo, 0, byteInfo.Length);
+           // output.Position = 0;
+           // HttpContext.Response.AddHeader("content-disposition", "attachment; filename=form.pdf");
+           // //m.Write(byteInfo, 0, byteInfo.Length);
+           // //m.Position = 0;
+           // //m.Flush();
+            
+           // return new FileStreamResult(output, "application/pdf");
+            MovementOfFundsModel model = new MovementOfFundsModel();
+            model = _mfRepository.GetMovementOfFundsByID(id);
+            MovementTypesModel modelTypes = new MovementTypesModel();
+            modelTypes = _mtRepository.GetMovementOfFundsByID(model.movementTypeId);
+
+            var move = new MovementOfFundsModel
+            {
+                EstimateDate = model.EstimateDate,
+                EstimatePrice = model.EstimatePrice,
+                RealDate = model.RealDate,
+                RealPrice = model.RealPrice,
+                fundType = modelTypes.movementType,
+                movementType = modelTypes
+            };
+            //var model = new MovementOfFundsModel
+            //{
+                
+            //    RealPrice = 1,
+            //    sectionId = 1
+            //    //movementType = {
+            //    //    //new MovementTypesModel {
+            //    //     sectionId = 1,
+            //    //     Description = "Item 1",
+            //       //  directory ="test"}
+            //        //new MovementTypesModel {
+            //        //     sectionId = 1,
+            //        // Description = "Item 1",
+            //        // directory ="test"}
+            //    //}
+            //};
+            return new PdfActionResult(move);
+        }
         [HttpGet]
         public ActionResult Edit(int id)
         {
             MovementOfFundsModel movementModel = new MovementOfFundsModel();
             movementModel = _mfRepository.GetMovementOfFundsByID(id);
-            PopulateDropDown(movementModel.movementType.sectionId, movementModel.movementTypeId);
+            PopulateDropDown(movementModel.sectionId, movementModel.movementTypeId);
             return PartialView(movementModel);
         }
 
         [HttpPost]
         public ActionResult Edit(MovementOfFundsModel movementModel)
         {
-            PopulateDropDown(movementModel.movementType.sectionId, movementModel.movementTypeId);
+            PopulateDropDown(movementModel.sectionId, movementModel.movementTypeId);
             if (User.Identity.Name != null)
             {
                 movementModel.userId = User.Identity.GetUserId();
@@ -121,7 +241,12 @@ namespace WalletManager.Controllers
             return RedirectToAction("Index");
         }
 
-
+        public ActionResult Delete(int id)
+        {
+            _mfRepository.DeleteMovementOfFunds(id);
+            _mfRepository.Save();
+            return RedirectToAction("Index");
+        }
 
         public ActionResult PieChart()
         {

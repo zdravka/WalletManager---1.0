@@ -62,7 +62,7 @@
                     <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
                         <i class="fa fa-pencil-square-o fa-2x"></i>
                     </a>
-                    <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                    <a id="@item.id" data-toggle="modal" data-target="#myModalDelete" style="cursor:pointer;">
                         <i class="fa fa-recycle fa-2x"></i>
                     </a>
                 </td>
@@ -75,6 +75,7 @@
 <div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     ----
 </div>
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
 <script type="text/javascript">
     $(function () {
             $('body').on("click", "a[data-target=#myModal]", function () {
@@ -93,6 +94,15 @@
                     $('#myModalCreate').html(data);
 
                     $('#myModalCreate').modal('show');
+                });
+            });
+            $('body').on("click", "a[data-target=#myModalDelete]", function () {
+                var url = $('#myModalDelete').data('url');
+
+                $.get("../Settings/Delete/" + $(this).attr('id'), function (data) {
+                    //$('#myModalDelete').html(data);
+                    //$('#myModalDelete').modal('show');
+                    window.location.reload(true);
                 });
             });
             $("#myCarousel").hide();

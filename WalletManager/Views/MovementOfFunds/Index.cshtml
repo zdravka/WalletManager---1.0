@@ -9,6 +9,10 @@
         <i class="glyphicon glyphicon-plus"></i>
         Add
     </a>
+    @*<a data-toggle="modal" data-target="#myModalReport" style="cursor:pointer;" class="btn btn-info">
+        <i class="glyphicon glyphicon-download-alt"></i>
+        Export
+    </a>*@
 </p>
 <div class="panel panel-success">
     <div class="panel-heading">Movement of funds</div>
@@ -34,6 +38,7 @@
                     <th>
                         @Html.DisplayNameFor(model => model.sectionId)
                     </th>
+                    <th></th>
                 </tr>
             </thead>
             @foreach (var item in Model)
@@ -83,6 +88,18 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.movementType.movementType.name)
                         </td>
+                        <td>
+
+                            <a id="@item.Id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                                <i class="fa fa-pencil-square-o fa-2x"></i>
+                            </a>
+                            <a id="@item.Id" data-toggle="modal" data-target="#myModalDelete" style="cursor:pointer;">
+                                <i class="fa fa-recycle fa-2x"></i>
+                            </a>
+                            <a id="@item.Id" href="@Url.Action("PDF", "MovementOfFunds", new { id = @item.Id })" style="cursor:pointer;" target="_blank">
+                                <i class="fa fa-file-pdf-o fa-2x"></i>
+                            </a>
+                        </td>
                     </tr>
                 </tbody>
             }
@@ -108,6 +125,10 @@
     <div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         ----
     </div>
+<div class="modal fade" id="myModalReport" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    ----
+</div>
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
     <script type="text/javascript">
         $(function () {
 
@@ -127,6 +148,26 @@
                     $('#myModalCreate').html(data);
 
                     $('#myModalCreate').modal('show');
+                });
+            });
+
+            $('body').on("click", "a[data-target=#myModalReport]", function () {
+                var url = $('#myModalReport').data('url');
+
+                $.get("../MovementOfFunds/PDF/" + $(this).attr('id'), function (data) {
+                    //$('#myModalReport').html(data);
+                   
+                    //$('#myModalReport').modal('show');
+                });
+            });
+
+            $('body').on("click", "a[data-target=#myModalDelete]", function () {
+                var url = $('#myModalDelete').data('url');
+
+                $.get("../MovementOfFunds/Delete/" + $(this).attr('id'), function (data) {
+                    //$('#myModalDelete').html(data);
+                    //$('#myModalDelete').modal('show');
+                    window.location.reload(true);
                 });
             });
             $("#myCarousel").hide();

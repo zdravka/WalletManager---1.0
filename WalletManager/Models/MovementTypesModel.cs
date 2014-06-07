@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WalletManager.Models
 {
-    [Table("MOvementTypes")]
+    [Table("MovementTypes")]
     public class MovementTypesModel
     {
         [Key]
@@ -31,5 +31,9 @@ namespace WalletManager.Models
         [Display(Name = "User")]
         [Column("userId")]
         public string userId { get; set; }
+
+        [Display(Name = "Email")]
+        [Column("email")]
+        public string email { get; set; }
     }
 }

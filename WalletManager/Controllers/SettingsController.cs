@@ -46,7 +46,8 @@ namespace WalletManager.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var movement = from mf in _mtRepository.GetMovementTypes()
+
+            var movement = from mf in _mtRepository.GetMovementTypes() where ( mf.email == UserManager.GetEmail(User.Identity.GetUserId()) || mf.userId == User.Identity.GetUserId() )
                            select mf;
 
             return View("Index", movement);
@@ -101,6 +102,12 @@ namespace WalletManager.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Delete(int id)
+        {
+            _mtRepository.DeleteMovementTypes(id);
+            _mtRepository.Save();
+            return RedirectToAction("Index");
+        }
         public ActionResult Sections()
         {
             var allsections = from ft in _ftRepository.GetFundsTypes()

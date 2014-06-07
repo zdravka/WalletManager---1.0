@@ -1,0 +1,29 @@
+﻿@model WalletManager.Models.MovementOfFundsModel
+
+@{
+    Layout = null;
+}
+
+<table width="100%" class="table table-bordered">
+    <tr>
+        <td>Type</td>
+        <td>Real Price</td>
+        <td>Estimate Price</td>
+        <td>Real Date</td>
+        <td>Estimate Date</td>
+        <td>Name</td>
+
+    </tr>
+    @*@foreach (var item in Model)
+        {*@
+    <tr>
+        <td>@Model.movementType.movementType.name</td>
+            <td>@Model.RealPrice</td>
+            <td>@Model.EstimatePrice</td>
+            <td>@Model.RealDate</td>
+            <td>@Model.EstimateDate</td>
+            <td>@Model.movementType.directory</td>
+        </tr>
+        @*}*@
+    </table>
+

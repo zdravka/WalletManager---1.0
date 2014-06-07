@@ -1,0 +1,67 @@
+﻿@model WalletManager.Models.MovementOfFundsModel
+
+@*<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel"><strong><i></i></strong></h4>
+        </div>
+        <div class="modal-body">*@
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RealDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EstimateDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RealPrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EstimatePrice)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.movementType.movementType.name)
+                    </th>
+                    
+                    <th>
+                        @Html.DisplayNameFor(model => model.movementTypeId)
+                    </th>
+                </tr>
+
+                @*@foreach (var item in Model)
+                {*@
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => model.RealDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimateDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.RealPrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.EstimatePrice)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.movementType.movementType.name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => model.movementType.directory)
+                        </td>
+                    </tr>
+                @*}*@
+
+            </table>
+        @*</div>
+        <div class="modal-footer">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Export" class="btn btn-primary" />
+                </div>
+            </div>
+        </div>
+        </div>
+</div>*@

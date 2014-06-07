@@ -171,24 +171,24 @@ namespace WalletManager.Controllers
                 {
                     await SignInAsync(user, isPersistent: false);
 
-                    //MovementTypesModel movementTypeModel = new MovementTypesModel();
-                    //List<MovementTypesModel> movementTypeModels = new List<MovementTypesModel>();
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "car", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for car" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "salary", sectionId = 2, userId = User.Identity.GetUserId(), Description = "Income salary" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "rent", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for rent" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Eating out", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for eating out" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Electronics", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for electronics" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Pets", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for pets" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Personal", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for me" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Income other", sectionId = 2, userId = User.Identity.GetUserId(), Description = "Income" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Expense other", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense" });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Phone,Internet", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for phone, internet, tv and etc." });
-                    //movementTypeModels.Add(new MovementTypesModel() { directory = "Groceries", sectionId = 1, userId = User.Identity.GetUserId(), Description = "Expense for groceries" });
-                    //foreach (var type in movementTypeModels)
-                    //{
-                    //    _mtRepository.InsertMovementTypes(type);
-                    //    _mtRepository.Save();
-                    //}
+                    MovementTypesModel movementTypeModel = new MovementTypesModel();
+                    List<MovementTypesModel> movementTypeModels = new List<MovementTypesModel>();
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "car", sectionId = 1, email = model.Email, Description = "Expense for car" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "salary", sectionId = 2, email = model.Email, Description = "Income salary" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "rent", sectionId = 1, email = model.Email, Description = "Expense for rent" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Eating out", sectionId = 1, email = model.Email, Description = "Expense for eating out" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Electronics", sectionId = 1, email = model.Email, Description = "Expense for electronics" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Pets", sectionId = 1, email = model.Email, Description = "Expense for pets" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Personal", sectionId = 1, email = model.Email, Description = "Expense for me" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Income other", sectionId = 2, email = model.Email, Description = "Income" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Expense other", sectionId = 1, email = model.Email, Description = "Expense" });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Phone,Internet", sectionId = 1, email = model.Email, Description = "Expense for phone, internet, tv and etc." });
+                    movementTypeModels.Add(new MovementTypesModel() { directory = "Groceries", sectionId = 1, email = model.Email, Description = "Expense for groceries" });
+                    foreach (var type in movementTypeModels)
+                    {
+                        _mtRepository.InsertMovementTypes(type);
+                        _mtRepository.Save();
+                    }
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
