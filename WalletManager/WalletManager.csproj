@@ -233,6 +233,7 @@
     <Content Include="assets\safe_sh.png" />
     <Content Include="assets\stethoscope-money-6436961-140x140.jpg" />
     <Content Include="assets\Warning.png" />
+    <Content Include="ClassDiagram1.png" />
     <Content Include="Content\bootstrap-datepicker.css" />
     <Content Include="Content\bootstrap-datepicker3.css" />
     <Content Include="Content\bootstrap.css" />
