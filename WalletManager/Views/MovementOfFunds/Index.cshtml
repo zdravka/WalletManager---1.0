@@ -3,17 +3,23 @@
 @{
     ViewBag.Title = "Index";
 }
+@{
+    decimal TotalIncome = 0;
+    decimal TotalExpences = 0;
+}
 <br />
 <p>
     <a data-toggle="modal" data-target="#myModalCreate" style="cursor:pointer;" class="btn btn-primary">
         <i class="glyphicon glyphicon-plus"></i>
         Add
     </a>
+    
     @*<a data-toggle="modal" data-target="#myModalReport" style="cursor:pointer;" class="btn btn-info">
         <i class="glyphicon glyphicon-download-alt"></i>
         Export
     </a>*@
 </p>
+
 <div class="panel panel-success">
     <div class="panel-heading">Movement of funds</div>
     <div class="panel-body">
@@ -76,12 +82,24 @@
                             {
                                 <span class="redExpense">
                                     @Html.DisplayFor(modelItem => item.RealPrice)
+                                    @{
+                                        if (item.RealPrice != null)
+                                        {
+                                            TotalExpences += (decimal)item.RealPrice;
+                                        }
+                                    }
                                 </span>
                             }
                             else if (item.movementType.sectionId == 2)
                             {
                                 <span class="greenIncome">
                                     @Html.DisplayFor(modelItem => item.RealPrice)
+                                    @{
+                                        if (item.RealPrice != null)
+                                        {
+                                            TotalIncome += (decimal)item.RealPrice;
+                                        }
+                                    }
                                 </span>
                             }
                         </td>
@@ -103,7 +121,23 @@
                     </tr>
                 </tbody>
             }
+            @{
+                decimal Balance = TotalIncome + TotalExpences;
+             }
+            <tr>
+                <td><h4><span class="label label-danger">Total Expenses: @TotalExpences</span></h4></td>
+                <td><h4><span class="label label-success">Total Incomes: @TotalIncome</span></h4></td>
+                <td><h4><span class="label label-warning">Balance: @Balance</span></h4></td>
+                @if (Balance < 0)
+                {
+                    <td><h4><span class="label label-danger">You not have enought money!</span></h4></td>
+                }
+                else { 
+                     <td><h4><span class="label label-success">Your financial position is ok. </span></h4></td>
+                }
+            </tr>
         </table>
+      
     </div>
 </div>
 <div class="panel panel-success">

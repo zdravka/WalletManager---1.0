@@ -28,8 +28,8 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.movementTypeId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.DropDownListFor(model => model.movementTypeId, (SelectList)ViewBag.movementTypeId, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.movementTypeId, "", new { @class = "text-danger" })
+                        @Html.DropDownListFor(model => model.movementType.id, (SelectList)ViewBag.movementTypeId, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.movementType.id, "", new { @class = "text-danger" })
                     </div>
                 </div>
 

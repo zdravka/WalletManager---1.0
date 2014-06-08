@@ -46,12 +46,18 @@ namespace WalletManager.Models
         [Column("userId")]
         public string userId { get; set; }
 
+        //[Display(Name = "Movement")]
+        //public int movementTypeId { get; set; }
+
+        //[ForeignKey("movementTypeId")]
+        //public virtual MovementTypesModel movementType { get; set; }
+        //[ForeignKey("userId")]
+        //public virtual FundsTypeModel fundType { get; set; }
         [Display(Name = "Movement")]
         public int movementTypeId { get; set; }
 
         [ForeignKey("movementTypeId")]
         public virtual MovementTypesModel movementType { get; set; }
-        //[ForeignKey("userId")]
-        //public virtual FundsTypeModel fundType { get; set; }
+
     }
 }
