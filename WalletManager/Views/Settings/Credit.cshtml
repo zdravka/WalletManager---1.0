@@ -1,0 +1,69 @@
+﻿@model IEnumerable<WalletManager.Models.MovementOfFundsModel>
+
+@{
+    decimal TotalExpences = 0;
+}
+<table class="table table-hover">
+    <thead>
+        <tr>
+           
+            <th>
+                @Html.DisplayNameFor(model => model.RealPrice)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.sectionId)
+            </th>
+            
+            <th>
+                @Html.DisplayNameFor(model => model.movementTypeId)
+            </th>
+            <th>@Html.CheckBox("period")</th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tbody>
+            <tr>
+                
+                <td>
+                    @Html.DisplayFor(modelItem => item.RealPrice)
+                    @{
+                        if (item.RealPrice != null)
+                        {
+                            TotalExpences += (decimal)item.RealPrice;
+                        }
+                    }
+                </td>
+              
+                <td>
+                    @Html.DisplayFor(modelItem => item.movementType.directory)
+                </td>
+              
+                <td>
+                    @Html.DisplayFor(modelItem => item.movementType.movementType.name)
+                </td>
+                <td>
+                    @Html.CheckBox("period")
+                </td>
+                <td>
+                    <a id="@item.Id" data-toggle="modal" data-target="#myModalDate" style="cursor:pointer;">
+                        <i class="fa fa-pencil-square-o fa-2x"></i>
+                    </a>
+                    <a id="@item.Id" data-toggle="modal" data-target="#myModalDelete" style="cursor:pointer;">
+                        <i class="fa fa-recycle fa-2x"></i>
+                    </a>
+              
+                </td>
+            </tr>
+        </tbody>
+    }
+    <tr>
+        <td><h4><span class="label label-danger">Total Expenses: @TotalExpences</span></h4></td>
+       
+
+
+    </tr>
+</table>
+

@@ -20,11 +20,14 @@ namespace WalletManager.Controllers
         
         IMovementTypes _mtRepository;
         IFundsTypeRepository _ftRepository;
+        IMovementOfFundsRepository _mfRepository;
         private ApplicationUserManager _userManager;
+
         public SettingsController() 
         {
             this._mtRepository = new MovementTypes(new Context());
             this._ftRepository = new FundsTypeRepository(new Context());
+            this._mfRepository = new MovementOfFundsRepository(new Context());
         }
         public SettingsController(ApplicationUserManager userManager)
         {
@@ -119,6 +122,32 @@ namespace WalletManager.Controllers
         public void PopulateDropDown(object typeSelected = null)
         {
             ViewBag.sectionId = new SelectList(_ftRepository.GetFundsTypes(), "Id", "name");
+        }
+
+        public ActionResult SaveMore()
+        {
+            var movement = from mf in _mfRepository.GetMovementOfFunds()
+                           where mf.userId == User.Identity.GetUserId() && mf.sectionId == 2
+                           select mf;
+
+            return PartialView(movement);
+        }
+
+        public ActionResult Credit()
+        {
+            var movement = from mf in _mfRepository.GetMovementOfFunds()
+                           where mf.userId == User.Identity.GetUserId() && mf.sectionId == 1
+                           select mf;
+
+            return PartialView(movement);
+        }
+
+        public ActionResult EditDate(int id)
+        {
+            MovementOfFundsModel movementModel = new MovementOfFundsModel();
+            movementModel = _mfRepository.GetMovementOfFundsByID(id);
+            
+            return PartialView();
         }
     }
 }

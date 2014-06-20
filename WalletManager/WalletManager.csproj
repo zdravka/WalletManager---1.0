@@ -255,6 +255,7 @@
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DatePickerReady.js" />
     <Content Include="Scripts\ErniTheme\bootstrap.min.js" />
@@ -370,6 +371,9 @@
     <Content Include="Views\Project\Index.cshtml" />
     <Content Include="Wallet.dgml" />
     <Content Include="Views\Project\PrivacyPolicy.cshtml" />
+    <Content Include="Views\Settings\SaveMore.cshtml" />
+    <Content Include="Views\Settings\Credit.cshtml" />
+    <Content Include="Views\Settings\EditDate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

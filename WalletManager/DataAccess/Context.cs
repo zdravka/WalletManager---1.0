@@ -17,7 +17,7 @@ namespace WalletManager.DataAccess
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-            Database.SetInitializer<Context>(null); // <--- This is what i needed
+            Database.SetInitializer<Context>(null); 
 
       
 

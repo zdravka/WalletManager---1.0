@@ -4,80 +4,113 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<!--NAV SETTINGS-->
+<div class="tabbable">
+    <ul class="nav nav-tabs" id="myTab">
+        <li class="active"><a href="#categories" data-toggle="tab">Categories</a></li>
+        <li><a href="#Save" data-toggle="tab">Save More</a></li>
+        <li><a href="#Credit" data-toggle="tab">Credit</a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="categories">
+            <p>
+                <br />
+                <a data-toggle="modal" data-target="#myModalCreate" style="cursor:pointer;" class="btn btn-success">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    Add
+                </a>
+            </p>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
 
-<p>
-    <a data-toggle="modal" data-target="#myModalCreate" style="cursor:pointer;" class="btn btn-success">
-        <i class="glyphicon glyphicon-plus"></i>
-        Add
-    </a>
-</p>
-<table class="table table-hover">
-    <thead>
-        <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.directory)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.sectionId)
+                        </th>
 
-            <th>
-                @Html.DisplayNameFor(model => model.directory)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.sectionId)
-            </th>
+                        <th></th>
 
-            <th></th>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>
+                                <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                                    @Html.DisplayFor(modelItem => item.directory)
+                                </a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @if (item.sectionId == 1)
+                                {
+                                    <span class="redExpense">
+                                        @Html.DisplayFor(modelItem => item.movementType.name)
+                                    </span>
+                                }
+                                else if (item.sectionId == 2)
+                                {
+                                    <span class="greenIncome">
+                                        @Html.DisplayFor(modelItem => item.movementType.name)
+                                    </span>
+                                }
 
-        </tr>
-    </thead>
-    @foreach (var item in Model)
-    {
-        <tbody>
-            <tr>
-                <td>
-                    <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
-                        @Html.DisplayFor(modelItem => item.directory)
-                    </a>
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @if (item.sectionId == 1)
-                    {
-                        <span class="redExpense">
-                            @Html.DisplayFor(modelItem => item.movementType.name)
-                        </span>
-                    }
-                    else if (item.sectionId == 2)
-                    {
-                        <span class="greenIncome">
-                            @Html.DisplayFor(modelItem => item.movementType.name)
-                        </span>
-                    }
-                   
-                </td>
+                            </td>
 
-                <td>
-                    
-                    <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
-                        <i class="fa fa-pencil-square-o fa-2x"></i>
-                    </a>
-                    <a id="@item.id" data-toggle="modal" data-target="#myModalDelete" style="cursor:pointer;">
-                        <i class="fa fa-recycle fa-2x"></i>
-                    </a>
-                </td>
-            </tr>
-        </tbody>
-    }
+                            <td>
 
-</table>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
-<div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    ----
-</div>
-<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
-<script type="text/javascript">
-    $(function () {
+                                <a id="@item.id" data-toggle="modal" data-target="#myModal" style="cursor:pointer;">
+                                    <i class="fa fa-pencil-square-o fa-2x"></i>
+                                </a>
+                                <a id="@item.id" data-toggle="modal" data-target="#myModalDelete" style="cursor:pointer;">
+                                    <i class="fa fa-recycle fa-2x"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+
+            </table>
+          
+        </div>
+        <div class="tab-pane fade" id="Save">
+            @Html.Action("SaveMore")
+        </div>
+        <div class="tab-pane fade" id="Credit">
+            @Html.Action("Credit")
+        </div>
+             <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
+            <div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                ----
+            </div>
+            <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
+            <div class="modal fade" id="myModalDate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"> </div>
+       
+       
+    </div>
+    </div>
+    <script type="text/javascript">
+        $(function () {
+
+            $('#myTab a').click(function (e) {
+                if ($(this).parent('li').hasClass('active')) {
+                    $($(this).attr('href')).hide();
+                }
+                else {
+                    e.preventDefault();
+                    $(this).tab('show');
+                }
+            });
+          
             $('body').on("click", "a[data-target=#myModal]", function () {
                 var url = $('#myModal').data('url');
 
@@ -105,7 +138,16 @@
                     window.location.reload(true);
                 });
             });
+            $('body').on("click", "a[data-target=#myModalDate]", function () {
+                var url = $('#myModalDate').data('url');
+
+                $.get("../Settings/EditDate/" + $(this).attr('id'), function (data) {
+                    $('#myModal').html(data);
+
+                    $('#myModal').modal('show');
+                });
+            });
             $("#myCarousel").hide();
             $("#nav").attr("style", "margin-bottom: 0px !important; position: relative !important;")
         });
-</script>
+    </script>

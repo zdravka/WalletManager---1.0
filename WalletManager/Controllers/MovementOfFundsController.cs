@@ -57,8 +57,11 @@ namespace WalletManager.Controllers
         // GET: MovementOfFunds
         public ActionResult Index()
         {
-            var movement = from mf in _mfRepository.GetMovementOfFunds() where mf.userId == User.Identity.GetUserId()
-                      select mf;
+            //ViewData["SearchString"] = SearchString;
+            var movement = from mf in _mfRepository.GetMovementOfFunds()
+                           where mf.userId == User.Identity.GetUserId()
+                           select mf;
+
             foreach (var item in movement)
             {
                 if (item.sectionId == 1)
@@ -67,6 +70,17 @@ namespace WalletManager.Controllers
                     item.RealPrice -= 2 * item.RealPrice;
                 }
             }
+            //if (string.IsNullOrWhiteSpace(SearchString))
+            //{
+            //    movement = pos.ToPagedList(currentPageIndex, defaultPageSize);
+            //}
+            //else
+            //{
+            //    movement = pos.Where(p => p.CurrentDate.ToShortDateString().Contains(date.ToShortDateString())).ToPagedList(currentPageIndex, defaultPageSize);
+
+            //}
+
+           
             return View("Index", movement);
         }
 
